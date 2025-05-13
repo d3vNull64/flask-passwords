@@ -3,14 +3,93 @@
 
   <head>
     <meta charset="utf-8">
+    <link rel="shortcut icon" href="./static/img/favicon.ico" />
     <link rel="stylesheet" href="./static/css/generator.css" type="text/css" media="screen" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
     <title>Passworg Generator</title>
   </head>
 
   <body>
-    <h1>it works!</h1>
-    <script type="text/javascript" src="./ststic/js/generator.js"></script>
+    <div class="container d-flex justify-content-center align-items-center w-100 vh-100">
+      <div class="shadow rounded p-4 pb-2 w-50">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            {% for categorie, message in messages %}
+              <div class="alert alert-{{ categorie }}">Hello</div>
+            {% endfor %}
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST" id="generatorForm">
+          <h1 class="fs-5 mb-3 text-primary">Password Generator</h1>
+
+          <hr />
+
+          <section class="mb-3">
+            <label class="form-label text-secondary">Options</label>
+            <div class="btn-group w-100 mb-3" role="group">
+              <input type="checkbox" class="btn-check" name="lower" id="lower" autocomplete="off" {{ "checked" if session["lower"] else "" }} />
+              <label for="lower" class="btn btn-outline-danger">a - z</label>
+
+              <input type="checkbox" class="btn-check" name="upper" id="upper" autocomplete="off" {{ "checked" if session["upper"] else "" }} />
+              <label for="upper" class="btn btn-outline-danger">A - Z</label>
+
+              <input type="checkbox" class="btn-check" name="number" id="number" autocomplete="off" {{ "checked" if session["number"] else "" }} />
+              <label for="number" class="btn btn-outline-danger">0 - 9</label>
+
+              <input type="checkbox" class="btn-check" name="hash" id="hash" autocomplete="off" {{ "checked" if session["hash"] else "" }} />
+              <label for="hash" class="btn btn-outline-danger"># $ % & @ ´ ~</label>
+            </div>
+
+            <div class="btn-group w-100 mb-3" role="group">
+              <input type="checkbox" class="btn-check" name="dots" id="dots" autocomplete="off" {{ "checked" if session["dots"] else "" }} />
+              <label class="btn btn-outline-danger" for="dots">. : , ; ' "</label>
+
+              <input type="checkbox" class="btn-check" name="dash" id="dash" autocomplete="off" {{ "checked" if session["dash"] else "" }} />
+              <label class="btn btn-outline-danger" for="dash">/ \ | - _</label>
+
+              <input type="checkbox" class="btn-check" name="symbol" id="symbol" autocomplete="off" {{ "checked" if session["symbol"] else "" }} />
+              <label class="btn btn-outline-danger" for="symbol"><> * + ! ? =</label>
+
+              <input type="checkbox" class="btn-check" name="bracket" id="bracket" autocomplete="off" {{ "checked" if session["bracket"] else "" }} />
+              <label class="btn btn-outline-danger" for="bracket">{ [ ( ) ] }</label>
+            </div>
+
+            <div class="btn-group w-100" role="group">
+              <input type="checkbox" class="btn-check" name="extended" id="extended" autocomplete="off" {{ "checked" if session["extended"] else "" }}/>
+              <label class="btn btn-outline-danger" for="extended">Extended. ASCII</label>
+            </div>
+          </section>
+
+          <section class="mb-3">
+            <label for="lengthGroup" class="text-secondary form-label">Length</label>
+            <div class="input-group" id="lengthGroup">
+              <input type="range" class="form-range me-3 pt-3 w-75" min="6" max="128" step="1" id="rangeLen" value={{ session['length'] }} />
+              <input type="number" class="form-control rounded" min="6" max="128" name="numberLen" id="numberLen" value={{ session['length'] }} />
+            </div>
+          </section>
+
+          <hr />
+
+          <section>
+            <div class="input-group mb-3" style="height: 50px;">
+              <input class="form-control text-center" id="txt-pass" value="{{ generated_password | e }}"/>
+              <button class="btn btn-primary border-end" id="btn-gen"><i class="nf nf-fa-refresh me-2"></i>Generate</button>
+              <button type="button" class="btn btn-primary border-start" id="btn-copy"><i class="nf nf-fa-copy me-2"></i>Copy</button>
+            </div>
+          </section>
+        </form>
+
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="text/javascript" src="./static/js/generator.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-k6d4wzSIapyDyv1kpU366/PK5hCdSbCRGRCMv+eplOQJWyd1fbcAu9OCUj5zNLiq"
+            crossorigin="anonymous"></script>
   </body>
 
 </html>
