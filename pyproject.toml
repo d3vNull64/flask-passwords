@@ -1,0 +1,17 @@
+[project]
+name = "Password Generator"
+version = "0.1.0"
+description = "Secure and random password generator using Flask and Bootstrap"
+authors = [
+	{ name = "Omar Rivera"	},
+]
+dependencies = [
+	     "flask"
+]
+
+requires-python = "==3.13.*"
+readme = "README.md"
+license = "GPL-3.0-or-later"
+
+[tool.pdm]
+distribution = false
